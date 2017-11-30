@@ -1,0 +1,81 @@
+{
+  "name": "github-uploader",
+  "description": "",
+  "author": "xxhomey19",
+  "license": "MIT",
+  "homepage": "https://github.com/xxhomey19/github-uploader#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xxhomey19/github-uploader.git"
+  },
+  "bugs": {
+    "url": "https://github.com/xxhomey19/github-uploader/issues"
+  },
+  "version": "0.1.0",
+  "main": "lib/cli.js",
+  "bin": {
+    "github-uploader": "lib/cli.js",
+    "gu": "lib/cli.js"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "npm run clean && babel src -d lib",
+    "clean": "rimraf lib",
+    "precommit": "lint-staged",
+    "lint": "eslint src",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "dependencies": {
+    "babel-register": "^6.26.0",
+    "chalk": "^2.3.0",
+    "chromeless": "^1.3.0",
+    "lpad": "^2.0.1",
+    "minimist": "^1.2.0",
+    "ora": "^1.3.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.0.2",
+    "babel-jest": "^21.2.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.12.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-prettier": "^2.3.1",
+    "eslint-plugin-react": "^7.5.1",
+    "husky": "^0.14.3",
+    "jest": "^21.2.1",
+    "lint-staged": "^5.0.0",
+    "prettier": "^1.8.2",
+    "prettier-package-json": "^1.4.0",
+    "rimraf": "^2.6.2"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/__tests__/"
+    ],
+    "testPathIgnorePatterns": [
+      "node_modules/"
+    ]
+  },
+  "lint-staged": {
+    "package.json": [
+      "prettier-package-json --write",
+      "git add"
+    ],
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  }
+}

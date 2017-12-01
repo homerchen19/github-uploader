@@ -1,5 +1,6 @@
-import { Chromeless } from 'chromeless';
+import puppeteer from 'puppeteer';
 import path from 'path';
+import ora from 'ora';
 
 const getAbsoluteFulePaths = filePaths => {
   const cwd = process.cwd();
@@ -7,24 +8,42 @@ const getAbsoluteFulePaths = filePaths => {
 };
 
 const upload = async filePaths => {
+  const spinner = ora('Start to login...').start();
+
   const absoluteFilePaths = getAbsoluteFulePaths(filePaths);
 
-  const chromeless = new Chromeless();
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
 
-  const textareaValue = await chromeless
-    .goto('https://github.com/login')
-    .clearCache()
-    .type('xxxhomey19', '#login_field')
-    .type('abc12345', '#password')
-    .click('input[type="submit"]')
-    .wait('body.logged-in')
-    .goto('https://github.com/xxhomey19/github-uploader/issues/new')
-    .setFileInput('.js-manual-file-chooser', absoluteFilePaths)
-    .wait(1000)
-    .wait('div.is-default')
-    .inputValue('textarea#issue_body');
+  await page.goto('https://github.com/login');
+  await page.type('#login_field', 'xxxhomey19');
+  await page.type('#password', 'abc12345');
+  await page.click('input[type="submit"]');
 
-  await chromeless.end();
+  try {
+    await page.waitForSelector('body.logged-in', { timeout: 15000 });
+
+    spinner.succeed('Login Successfully.');
+    spinner.start('Start to upload files...');
+  } catch (e) {
+    spinner.fail('Login failed.');
+
+    process.exit(1);
+  }
+
+  await page.goto('https://github.com/xxhomey19/github-uploader/issues/new');
+
+  const uploadElementHandle = await page.$('.js-manual-file-chooser');
+
+  await uploadElementHandle.uploadFile(...absoluteFilePaths);
+  await page.waitFor(1000);
+  await page.waitForSelector('div.is-default');
+
+  const textareaValue = await page.$eval('textarea#issue_body', el => el.value);
+
+  await page.close();
+
+  spinner.succeed('Upload Successfully.');
 
   return textareaValue;
 };

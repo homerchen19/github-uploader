@@ -1,5 +1,4 @@
 import minimist from 'minimist';
-import ora from 'ora';
 import chalk from 'chalk';
 import lpad from 'lpad';
 
@@ -22,10 +21,7 @@ const main = async argv => {
     try {
       console.log('');
 
-      const spinner = ora('Uploading files...').start();
       const textareaValue = await upload(argv._);
-
-      spinner.succeed('Successfully uploaded.');
 
       console.log(`
 

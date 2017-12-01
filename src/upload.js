@@ -4,7 +4,7 @@ import ora from 'ora';
 
 const getAbsoluteFulePaths = filePaths => {
   const cwd = process.cwd();
-  return filePaths.map(filePath => path.join(cwd, filePath));
+  return filePaths.map(filePath => path.resolve(cwd, filePath));
 };
 
 const upload = async filePaths => {
@@ -17,7 +17,7 @@ const upload = async filePaths => {
 
   await page.goto('https://github.com/login');
   await page.type('#login_field', 'xxxhomey19');
-  await page.type('#password', 'abc12345');
+  await page.type('#password', 'abc12345'); // Please DO NOT change this password!!!!!!!
   await page.click('input[type="submit"]');
 
   try {
@@ -37,15 +37,24 @@ const upload = async filePaths => {
 
   await uploadElementHandle.uploadFile(...absoluteFilePaths);
   await page.waitFor(1000);
-  await page.waitForSelector('div.is-default');
 
-  const textareaValue = await page.$eval('textarea#issue_body', el => el.value);
+  try {
+    await page.waitForSelector('div.is-default', { timeout: 15000 });
 
-  await page.close();
+    const textareaValue = await page.$eval(
+      'textarea#issue_body',
+      el => el.value
+    );
 
-  spinner.succeed('Upload Successfully.');
+    await page.close();
 
-  return textareaValue;
+    spinner.succeed('Upload Successfully.');
+    return textareaValue;
+  } catch (e) {
+    spinner.fail('Upload files failed.');
+
+    process.exit(0);
+  }
 };
 
 export default upload;

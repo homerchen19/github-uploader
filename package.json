@@ -21,11 +21,12 @@
     "lib"
   ],
   "scripts": {
-    "build": "npm run clean && babel src -d lib --ignore '**/*.spec.js' -s",
+    "build": "npm run clean && babel src -d lib --ignore '**/*.spec.js' -s && echo '#!/usr/bin/env node' | cat - lib/cli.js > temp && mv temp lib/cli.js",
     "clean": "rimraf lib",
     "precommit": "lint-staged",
     "lint": "eslint src",
     "lint:fix": "npm run lint -- --fix",
+    "prepublishOnly": "npm run build",
     "test": "npm run lint:fix && npm run testonly:cov",
     "testonly": "NODE_ENV=test jest",
     "testonly:cov": "jest --coverage --runInBand --forceExit --no-cache",

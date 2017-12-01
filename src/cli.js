@@ -54,6 +54,7 @@ const main = async argv => {
       });
 
       console.log(table.toString());
+      console.log('');
     } catch (e) {
       console.error(e);
     }

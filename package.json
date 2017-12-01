@@ -1,6 +1,6 @@
 {
   "name": "github-uploader",
-  "description": "",
+  "description": "Upload attachments to GitHub in CLI. The easiest way to get public URL to your files.",
   "author": "xxhomey19",
   "license": "MIT",
   "homepage": "https://github.com/xxhomey19/github-uploader#readme",
@@ -11,7 +11,7 @@
   "bugs": {
     "url": "https://github.com/xxhomey19/github-uploader/issues"
   },
-  "version": "0.1.0",
+  "version": "0.0.1",
   "main": "lib/cli.js",
   "bin": {
     "github-uploader": "lib/cli.js",
@@ -60,6 +60,14 @@
     "prettier": "^1.8.2",
     "prettier-package-json": "^1.4.0",
     "rimraf": "^2.6.2"
+  },
+  "keywords": [
+    "GitHub",
+    "file",
+    "uploader"
+  ],
+  "engines": {
+    "node": ">=6.4.0"
   },
   "jest": {
     "collectCoverageFrom": [

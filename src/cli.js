@@ -1,25 +1,26 @@
 import minimist from 'minimist';
 import chalk from 'chalk';
-import lpad from 'lpad';
 
 import help from './help';
 import upload from './upload';
 import pkg from '../package.json';
 
+import table from './utils/table';
+
 const GENERAL_REGEX = /[!]?\[(.*)\]\((.*)\)/;
 const IMGTAG_REGEX = /[^<img].*alt="(.*)" src="(.*)"[>$]/;
 
 export const parseTextareaValue = textareaValue => {
-  const fileTexts = textareaValue.split('\n');
+  const fileTexts = textareaValue.replace(/\n$/, '').split('\n');
 
   return fileTexts.map(fileText => {
     const regex = fileText[0] !== '<' ? GENERAL_REGEX : IMGTAG_REGEX;
 
-    const [originalText, title, url] = fileText.match(regex);
+    const [originalText, name, url] = fileText.match(regex);
 
     return {
       originalText,
-      title,
+      name,
       url,
     };
   });
@@ -41,14 +42,18 @@ const main = async argv => {
       console.log('');
 
       const textareaValue = await upload(argv._);
-      const result = parseTextareaValue(textareaValue);
+      const files = parseTextareaValue(textareaValue);
 
       console.log(`
 
     ${chalk.green('Result:')}
-
-${lpad(chalk.bold(result), '      ')}
       `);
+
+      files.forEach(file => {
+        table.push([file.name, file.url]);
+      });
+
+      console.log(table.toString());
     } catch (e) {
       console.error(e);
     }

@@ -21,7 +21,8 @@
         trailingComma: 'es5',
         singleQuote: true,
       }
-    ]
+    ],
+    "no-console": "off"
   },
   "plugins": [
     "babel",

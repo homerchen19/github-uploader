@@ -28,7 +28,7 @@ const upload = async filePaths => {
   } catch (e) {
     spinner.fail('Login failed.');
 
-    process.exit(1);
+    process.exit(0);
   }
 
   await page.goto('https://github.com/xxhomey19/github-uploader/issues/new');

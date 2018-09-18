@@ -39,7 +39,10 @@ const upload = async filePaths => {
   await page.waitFor(1000);
 
   try {
-    await page.waitForSelector('file-attachment.js-upload-markdown-image.is-default', { timeout: 15000 });
+    await page.waitForSelector(
+      'file-attachment.js-upload-markdown-image.is-default',
+      { timeout: 15000 }
+    );
 
     const textareaValue = await page.$eval(
       'textarea#issue_body',

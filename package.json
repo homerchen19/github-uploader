@@ -1,8 +1,8 @@
 {
   "name": "github-uploader",
   "description": "Upload attachments to GitHub in CLI. The easiest way to get public URL to your files.",
-  "author": "xxhomey19",
   "license": "MIT",
+  "author": "xxhomey19",
   "homepage": "https://github.com/xxhomey19/github-uploader#readme",
   "repository": {
     "type": "git",
@@ -33,32 +33,35 @@
     "testonly:watch": "jest --watch"
   },
   "dependencies": {
+    "@babel/runtime": "^7.0.0",
     "babel-register": "^6.26.0",
-    "chalk": "^2.3.0",
+    "chalk": "^2.4.1",
     "cli-table2": "^0.2.0",
     "minimist": "^1.2.0",
-    "ora": "^1.3.0",
-    "puppeteer": "^0.13.0"
+    "ora": "^3.0.0",
+    "puppeteer": "^1.8.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-eslint": "^8.0.2",
-    "babel-jest": "^21.2.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.6.1",
-    "eslint": "^4.12.1",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-babel": "^4.1.2",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-prettier": "^2.3.1",
-    "eslint-plugin-react": "^7.5.1",
+    "@babel/cli": "^7.1.0",
+    "@babel/core": "^7.1.0",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^9.0.0",
+    "babel-jest": "^23.6.0",
+    "eslint": "^5.6.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.0.1",
+    "eslint-plugin-babel": "^5.2.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-react": "^7.11.1",
     "husky": "^0.14.3",
-    "jest": "^21.2.1",
-    "lint-staged": "^5.0.0",
-    "prettier": "^1.8.2",
-    "prettier-package-json": "^1.4.0",
+    "jest": "^23.6.0",
+    "lint-staged": "^7.2.2",
+    "prettier": "^1.14.2",
+    "prettier-package-json": "^2.0.0",
     "rimraf": "^2.6.2"
   },
   "keywords": [
@@ -70,6 +73,10 @@
     "node": ">=6.4.0"
   },
   "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    },
+    "testEnvironment": "node",
     "collectCoverageFrom": [
       "src/**/*.js"
     ],
